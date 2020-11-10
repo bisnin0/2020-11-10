@@ -1,0 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!-- 링크를 안넣는 이유는 top.jspf에 링크가 들어가있기때문에 아래도 자동 적용이되어서 이다. -->
+<div id="bottom">
+	CopyRight
+</div>
+</body>
+</html>

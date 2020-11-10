@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml, /WEB-INF/spring/root-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+<!-- POST방식의 접속에 대한 한글인코딩(UTF-8) start -->
+	<!-- 프로젝트 생성할때마다 이부분 써줘야한다. -->	
+	<filter>
+		<description></description>
+		<display-name>SpringEncodeFilter</display-name>
+		<filter-name>SpringEncodeFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		
+	</filter>
+	<filter-mapping>
+		<filter-name>SpringEncodeFilter</filter-name>
+		<url-pattern>/*</url-pattern> 
+	</filter-mapping>
+	<!-- /* /다음에 무엇으로 접속하든 인코딩한다. -->
+	<!-- POST방식의 접속에 대한 한글인코딩(UTF-8) end -->
+	
+	<!-- 원하는 페이지에 include하기 -->
+	<!-- jsp-property-group은 홈페이지 위에 include하나 하거나 아래 include하나 하거나 위,아래 둘 다 하거나 이게 한 그룹이다. -->
+	<!-- prelude는 상단에 넣겠다. coda는 하단에 넣겠다는거다. -->
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>/WEB-INF/views/*</url-pattern>
+			<include-prelude>/WEB-INF/views/inc/top.jspf</include-prelude>
+			<include-coda>/WEB-INF/views/inc/bottom.jspf</include-coda>
+		</jsp-property-group>
+		<jsp-property-group>
+			<url-pattern>/WEB-INF/views/data/*</url-pattern>
+			<include-prelude>/WEB-INF/views/inc/top2.jspf</include-prelude>
+		</jsp-property-group>
+	</jsp-config>
+	
+</web-app>
